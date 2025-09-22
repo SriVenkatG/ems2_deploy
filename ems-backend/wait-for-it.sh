@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bash
+#!/usr/bin/env bash
 # small wait-for-it: wait for host:port then run command
 set -e
 
