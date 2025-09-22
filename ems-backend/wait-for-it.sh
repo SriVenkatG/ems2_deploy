@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 # small wait-for-it: wait for host:port then run command
 set -e
 
@@ -27,5 +27,5 @@ while ! (echo > /dev/tcp/"$host"/"$port") 2>/dev/null; do
   sleep 1
 done
 
-echo "$host:$port is available — running command"
+echo "$host:$port is available â€” running command"
 exec $cmd
