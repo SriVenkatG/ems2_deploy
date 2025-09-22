@@ -1,0 +1,26 @@
+# Build stage (Maven)
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+WORKDIR /app
+
+# copy only pom + mvnw and .mvn for caching then project source
+COPY pom.xml mvnw ./
+COPY .mvn .mvn
+COPY src src
+
+RUN mvn -B -DskipTests package
+
+# Runtime stage
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+
+# Copy jar from build
+COPY --from=build /app/target/*.jar /app/app.jar
+
+# Copy wait script
+COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
+RUN chmod +x /usr/local/bin/wait-for-it.sh
+
+EXPOSE 8081
+
+# Wait for mysql db (service name 'db' on port 3306) then run the jar
+ENTRYPOINT ["/usr/local/bin/wait-for-it.sh", "db:3306", "--", "java", "-jar", "/app/app.jar"]
