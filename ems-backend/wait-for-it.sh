@@ -27,5 +27,5 @@ while ! (echo > /dev/tcp/"$host"/"$port") 2>/dev/null; do
   sleep 1
 done
 
-echo "$host:$port is available â€” running command"
+echo "$host:$port is available Ã¢â‚¬â€ running command"
 exec $cmd
